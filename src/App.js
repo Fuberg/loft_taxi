@@ -3,7 +3,7 @@ import { HomeWithAuth } from './Home';
 import { Map } from './Map';
 import { ProfileWithAuth } from './Profile';
 import './App.css';
-import { withAuth } from './AuthContext';
+import { connect } from 'react-redux';
 
 const PAGES = {
   home: (props) => <HomeWithAuth {...props} />,
@@ -27,7 +27,7 @@ class App extends React.Component {
   render() { 
     return <>
       <header class="topline">
-        <nav class="menu">
+        <nav class="menu" >
           <ul class="menu__list">
             <li class="menu__item">
               <button class="menu__button" onClick={() => this.navigateTo("home")}>Home</button>
@@ -50,4 +50,6 @@ class App extends React.Component {
   }
 }
 
-export default withAuth(App);
+export default connect(
+  state => ({isLoggedIn: state.auth.isLoggedIn})
+)(App);
