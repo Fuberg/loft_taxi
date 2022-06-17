@@ -4,46 +4,34 @@ import { Map } from './Map';
 import { ProfileWithAuth } from './Profile';
 import './App.css';
 import { connect } from 'react-redux';
-
-const PAGES = {
-  home: (props) => <HomeWithAuth {...props} />,
-  map: (props) => <Map {...props} />,
-  profile: (props) => <ProfileWithAuth {...props} />
-}
+import { Link, Route, Routes } from 'react-router-dom';
+import { PrivateRoute } from './PrivateRoute';
 
 class App extends React.Component {
-  state = {
-    currentPage: "home"
-  };
-
-  navigateTo = (page) => { 
-    if (this.props.isLoggedIn) {
-      this.setState({ currentPage: page });
-    } else { 
-      this.setState({ currentPage: "home" });
-    }
-  }
-  
   render() { 
     return <>
-      <header class="topline">
-        <nav class="menu" >
-          <ul class="menu__list">
-            <li class="menu__item">
-              <button class="menu__button" onClick={() => this.navigateTo("home")}>Home</button>
+      <header className="topline">
+        <nav className="menu" >
+          <ul className="menu__list">
+            <li className="menu__item">
+              <Link to='/'>Home</Link>
             </li>
-            <li class="menu__item">
-              <button class="menu__button" onClick={() => this.navigateTo("map")}>Map</button>
+            <li className="menu__item">
+              <Link to='/map'>Map</Link>
             </li>
-            <li class="menu__item">
-              <button class="menu__button" onClick={() => this.navigateTo("profile")}>Profile</button>
+            <li className="menu__item">
+              <Link to='/profile'>Profile</Link>
             </li>
           </ul>
         </nav>
       </header>
-      <main class="main">
-        <section class="section">
-          {PAGES[this.state.currentPage]({navigate: this.navigateTo})}
+      <main className="main">
+        <section className="section">
+          <Routes>
+            <Route path='/' element={<HomeWithAuth />} />
+            <PrivateRoute path='/map' element={<Map />} />
+            <PrivateRoute path='/profile' element={<ProfileWithAuth />} />
+          </Routes>
         </section>
       </main>
     </>;
