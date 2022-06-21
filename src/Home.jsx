@@ -1,12 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import { authenticate } from './actions'
 
-export class Home extends Component { 
-    goToProfile = () => { 
-        this.props.navigate("profile")
-    }
-
+export class Home extends Component {
     authenticate = (event) => {
         event.preventDefault();
         const { email, password } = event.target;
@@ -19,7 +16,7 @@ export class Home extends Component {
                 {
                     this.props.isLoggedIn ? (
                         <p>
-                            You are Logged in <button onClick={this.goToProfile}>go to Profile</button>
+                            You are Logged in <Link to="/profile">go to Profile</Link>
                         </p>
                     ) : (
                         <form onSubmit={this.authenticate}>

@@ -29,8 +29,8 @@ class App extends React.Component {
         <section className="section">
           <Routes>
             <Route path='/' element={<HomeWithAuth />} />
-            <PrivateRoute path='/map' element={<Map />} />
-            <PrivateRoute path='/profile' element={<ProfileWithAuth />} />
+            <Route path='/map' element={<PrivateRoute><Map /></PrivateRoute>} />
+            <Route path='/profile' element={<PrivateRoute><ProfileWithAuth /></PrivateRoute>} />
           </Routes>
         </section>
       </main>

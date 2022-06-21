@@ -1,14 +1,12 @@
 import React from "react";
-import { Route, Navigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { connect } from "react-redux";
 
-export const PrivateRoute = connect(state => ({
-    isLoggedIn: state.auth.isLoggedIn,
-}))(({component: Component, isLoggedIn, ...rest}) => (
-    <Route
-        {...rest}
-        render={props =>
-            isLoggedIn ? <Component {...props} /> : <Navigate replace to="/" />
-        }
-    />
-));
+export const PrivateRoute = connect((state) => ({ isLoggedIn: state.auth.isLoggedIn }))
+(({ children, isLoggedIn }) => {
+    
+    if (!isLoggedIn) {
+        return <Navigate to="/"/>;
+    }
+    return children;
+})
